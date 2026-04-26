@@ -3,7 +3,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-from sklearn.preprocessing import StandardScaler
 
 # load the model
 model = pickle.load(open('rf_model.pkl','rb'))
