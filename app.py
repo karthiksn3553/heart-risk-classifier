@@ -26,39 +26,32 @@ exerciseangina = st.selectbox('ExerciseAngina',('N' ,'Y'))
 st_slope = st.selectbox('ST_Slope',('Up', 'Flat', 'Down'))
 
 # Encoding logic
-# exerciseangina
-Exercise_Angina = 1 if exerciseangina=='Y' else 0
+# The model expects a single 'Sex' column, not two! (Standard encoding: M=1, F=0)
+Sex = 1 if gender == 'M' else 0
+ExerciseAngina = 1 if exerciseangina == 'Y' else 0
 
-# Sex
-Sex_F = 1 if gender=='F' else 0
-Sex_M = 1 if gender=='M' else 0
+ChestPainType_dict = {'ASY': 3, 'NAP': 2, 'ATA': 1, 'TA': 0}
+ChestPainType = ChestPainType_dict[chestpaintype]
 
-# Chest_PainType
-Chest_PainType_dict = {'ASY':3,'NAP':2,'ATA':1,'TA':0}
-Chest_PainType = Chest_PainType_dict[chestpaintype]
+RestingECG_dict = {'Normal': 0, 'LVH': 1, 'ST': 2}
+RestingECG = RestingECG_dict[restingecg]
 
-# Resting_ECG
-Resting_ECG_dict = {'Normal':0,'LVH':1,'ST':2}
-Resting_ECG = Resting_ECG_dict[restingecg]
+ST_Slope_dict = {'Down': 0, 'Up': 1, 'Flat': 2}
+ST_Slope = ST_Slope_dict[st_slope]
 
-# ST_Slope
-st_Slope_dict = {'Down':0,'Up':1,'Flat':2}
-st_Slope = st_Slope_dict[st_slope]
-
-# create dataframe
+# Create dataframe with EXACT spelling expected by the model
 input_features = pd.DataFrame({
-    'Age':[age],
-    'RestingBP':[restingbp],
-    'Cholesterol':[cholesterol],
-    'FastingBS':[fastingbs],
-    'MaxHR':[maxhr],
-    'Oldpeak':[oldpeak],
-    'Exercise_Angina':[Exercise_Angina],
-    'Sex_F':[Sex_F],
-    'Sex_M':[Sex_M],
-    'Chest_PainType':[Chest_PainType],
-    'Resting_ECG':[Resting_ECG],
-    'st_Slope':[st_Slope]
+    'Age': [age],
+    'Sex': [Sex],
+    'ChestPainType': [ChestPainType],
+    'RestingBP': [restingbp],
+    'Cholesterol': [cholesterol],
+    'FastingBS': [fastingbs],
+    'RestingECG': [RestingECG],
+    'MaxHR': [maxhr],
+    'ExerciseAngina': [ExerciseAngina],
+    'Oldpeak': [oldpeak],
+    'ST_Slope': [ST_Slope]
 })
 
 # scaling
